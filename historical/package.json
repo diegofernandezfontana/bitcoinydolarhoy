@@ -1,0 +1,12 @@
+{
+  "name": "historical",
+  "version": "1.0.0",
+  "description": "Project to fetch historial btc price",
+  "main": "index.js",
+  "author": "Diego Fernandez",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "node get-btc"
+  }
+}
