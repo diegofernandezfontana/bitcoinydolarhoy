@@ -24,8 +24,8 @@ Project that will get and transform the historic data and it will convert it to 
 - [x] Improve readme
 - [x] Find the historic data of the btc (till 28-04-2013)
 - [x] Find the historic data of the official and dollar blue.
-- [ ] Save and transform data.
-- [ ] Add readme for historial data integration. How to run, info. etc
+- [x] Save and transform data.
+- [x] Add readme for historial data integration. How to run, info. etc
 - [ ] Add Page with graph + historical comparission.
 - [ ] Add readme next.js proyect
 - [ ] Add Scrapper to get the latest price.
