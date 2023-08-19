@@ -21,7 +21,7 @@ fetch(COINGECKO_API)
 
     const formattedResult = getFormattedData(prices);
 
-    writeFile("btc_data.json", JSON.stringify(formattedResult, null, 2));
+    writeFile("data/btc_data.json", JSON.stringify(formattedResult, null, 2));
   })
   .catch((e) => {
     console.error("Something went wrong trying to fetch data. Error:", e);

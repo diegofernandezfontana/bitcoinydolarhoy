@@ -23,7 +23,7 @@ Project that will get and transform the historic data and it will convert it to 
 
 - [x] Improve readme
 - [x] Find the historic data of the btc (till 28-04-2013)
-- [ ] Find the historic data of the official and dollar blue.
+- [x] Find the historic data of the official and dollar blue.
 - [ ] Save and transform data.
 - [ ] Add readme for historial data integration. How to run, info. etc
 - [ ] Add Page with graph + historical comparission.
