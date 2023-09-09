@@ -1,0 +1,24 @@
+---
+interface Props {
+	name: string;
+  price: number;
+}
+
+const { name, price } = Astro.props;
+
+
+---
+
+
+<div class="font-medium rounded-lg min-h-[200px] text-center border-blue-950 transition-all md:m-2 lg:m-4 duration-200 ease-in-out hover:scale-100 scale-90 cursor-pointer">
+  <div class="justify-center h-full w-full ">
+    <div class="group grid w-full h-full justify-center rounded-lg border-2 p-3  hover:bg-slate-50 hover:text-gray-800 duration-200 ease-in-out ">
+      <h3 class="text-xl w-full font-bold text-center content-center">{name}</h3>
+      <div class="flex justify-center">
+        <slot >
+        </div>
+        <p class="content-center  group-hover:text-gray-800">{price}</p>
+      </div>
+    </div>
+  </div>
+</div>
