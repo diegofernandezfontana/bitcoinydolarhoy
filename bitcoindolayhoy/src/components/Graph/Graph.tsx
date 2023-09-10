@@ -30,18 +30,6 @@ const data = Object.keys(dataJson).map((el: keyof any) => {
   };
 });
 
-const Stop = (el: { id: string; color: string }) => {
-  return (
-    <defs>
-      <linearGradient id={el.id} x1="0" y1="0" x2="0" y2="1">
-        <stop offset="5%" stopColor={el.color} stopOpacity={0.5} />
-        <stop offset="50%" stopColor={el.color} stopOpacity={0.5} />
-        <stop offset="95%" stopColor={el.color} stopOpacity={0.2} />
-      </linearGradient>
-    </defs>
-  );
-};
-
 export const Graph = () => {
   const [width, setWidth] = useState<number>(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -99,7 +87,14 @@ export const Graph = () => {
           height={80}
           tick={<CustomizedAxisTick />}
         />
-        <Tooltip content={<CustomTooltip />} />
+        <Tooltip
+          content={
+            <CustomTooltip
+              displayBtcUsdOficial={displayBtc}
+              displayBtcUsdBlue={displayBtc}
+            />
+          }
+        />
         <YAxis tick={<CustomYAxsis />} width={2} />
 
         {elements.map((el) => {
@@ -140,9 +135,9 @@ export const Graph = () => {
           );
         })}
         <CartesianGrid
-          strokeDasharray="3 3"
+          vertical={false}
+          strokeDasharray="10 3"
           opacity={0.1}
-          verticalPoints={[]}
           stroke="#fff"
         />
       </AreaChart>
