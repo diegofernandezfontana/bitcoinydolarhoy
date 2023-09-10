@@ -17,6 +17,10 @@ In order to get the info from each script, we need node installed. Also its need
 
 `yarn get:aggregate`
 
+- Copy the data/days-with-data.json to the bitcoindolarhoy project as a JSON file with data.json name
+
+`yarn cp:static`
+
 ---
 
 Better data can be required later on, since there are a lot of days where the price of the USD is not as precise and some days are also missing.
