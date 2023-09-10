@@ -1,11 +1,10 @@
 ---
+
 interface Props {
 	name: string;
   price: number;
 }
-
 const { name, price } = Astro.props;
-
 
 ---
 
@@ -17,7 +16,11 @@ const { name, price } = Astro.props;
       <div class="flex justify-center">
         <slot >
         </div>
-        <p class="content-center  group-hover:text-gray-800">{price}</p>
+        <p class="content-center  group-hover:text-gray-800 text-3xl">{ 
+        new Intl.NumberFormat("de-DE", {
+          maximumFractionDigits: 0,
+          
+        }).format(price)}</p>
       </div>
     </div>
   </div>

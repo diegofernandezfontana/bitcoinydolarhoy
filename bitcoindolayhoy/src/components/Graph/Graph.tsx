@@ -1,14 +1,5 @@
-import {
-  Fragment,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type Ref,
-  type RefObject,
-} from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import dataJson from "../../data.json";
-import ArrowDownIcon from "../icons/ArrowDownIcon.astro";
 import {
   Area,
   AreaChart,
@@ -17,39 +8,42 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import CustomizedAxisTick from "./CustomXAxis";
+import CustomTooltip from "./CustomTooltip";
 
-const data = Object.keys(dataJson).map((el) => {
+interface Prices {
+  price_btc: number;
+  price_usd_blue: number;
+  price_usd_oficial: number;
+}
+
+const data = Object.keys(dataJson).map((el: keyof any) => {
+  const current = dataJson[el] as Prices;
+
   return {
     date: el,
-    price_btc: dataJson[el].price_btc * dataJson[el].price_usd_blue,
-    price_usd_blue: dataJson[el].price_usd_blue,
-    price_usd_oficial: dataJson[el].price_usd_oficial,
+    price_btc_usd_oficial: current.price_btc * current.price_usd_oficial,
+    price_btc_usd_blue: current.price_btc * current.price_usd_blue,
+    price_usd_blue: current.price_usd_blue,
+    price_usd_oficial: current.price_usd_oficial,
   };
 });
 
-const CustomizedAxisTick = (props) => {
-  const { x, y, payload } = props;
+const Stop = (el: { id: string; color: string }) => {
   return (
-    <>
-      <g transform={`translate(${x},${y})`}>
-        <text
-          x={0}
-          y={0}
-          dy={16}
-          textAnchor="end"
-          fill="#666"
-          transform="rotate(-35)"
-        >
-          {payload.value}
-        </text>
-      </g>
-    </>
+    <defs>
+      <linearGradient id={el.id} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="5%" stopColor={el.color} stopOpacity={0.5} />
+        <stop offset="50%" stopColor={el.color} stopOpacity={0.5} />
+        <stop offset="95%" stopColor={el.color} stopOpacity={0.2} />
+      </linearGradient>
+    </defs>
   );
 };
-
 export const Graph = () => {
   const [width, setWidth] = useState<number>(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [displayBtc, setDisplayBtc] = useState<boolean>(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
@@ -74,6 +68,19 @@ export const Graph = () => {
     return <button onClick={() => setIsOpen(true)}> Expand</button>;
   }
 
+  //https://tailwindcss.com/docs/customizing-colors
+  const usdBlueColor = "#0e7490";
+  const usdOfficialColor = "#16a34a";
+  const btcUsdOficial = "#f59e0b";
+  const btcUsdBlue = "#d97706";
+
+  const elements = [
+    { id: "price_usd_oficial", color: usdOfficialColor, display: true },
+    { id: "price_usd_blue", color: usdBlueColor, display: true },
+    { id: "price_btc_usd_oficial", color: btcUsdOficial, display: displayBtc },
+    { id: "price_btc_usd_blue", color: btcUsdBlue, display: displayBtc },
+  ];
+
   return (
     <div ref={ref}>
       <button onClick={() => setIsOpen(false)}> Close</button>
@@ -90,46 +97,91 @@ export const Graph = () => {
           height={80}
           tick={<CustomizedAxisTick />}
         />
-        <Tooltip content={<div />} />
+        <Tooltip content={<CustomTooltip />} />
         <YAxis tick={<div />} width={2} />
 
-        <defs>
-          <linearGradient id="price_btc" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#43bfb9" stopOpacity={0.5} />
-            <stop offset="50%" stopColor="#43bfb9" stopOpacity={0.5} />
-            <stop offset="95%" stopColor="#43bfb9" stopOpacity={0.2} />
-          </linearGradient>
-        </defs>
+        {elements.map((el) => {
+          return (
+            <>
+              {el.display ? (
+                <>
+                  <defs>
+                    <linearGradient id={el.id} x1="0" y1="0" x2="0" y2="1">
+                      <stop
+                        offset="5%"
+                        stopColor={el.color}
+                        stopOpacity={0.5}
+                      />
+                      <stop
+                        offset="50%"
+                        stopColor={el.color}
+                        stopOpacity={0.5}
+                      />
+                      <stop
+                        offset="95%"
+                        stopColor={el.color}
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                  </defs>
+                  <Area
+                    strokeWidth={2}
+                    type="monotone"
+                    dataKey={el.id}
+                    stroke={el.color}
+                    fillOpacity={1}
+                    fill={`url(#${el.id})`}
+                  />
+                </>
+              ) : null}
+            </>
+          );
+        })}
         <CartesianGrid
           strokeDasharray="10  5"
           opacity={0.4}
           verticalPoints={[]}
         />
-        <Area
-          strokeWidth={2}
-          type="monotone"
-          dataKey="price_btc"
-          stroke="#43bfb9"
-          fillOpacity={1}
-          fill="url(#price_btc)"
-        />
-        <Area
-          strokeWidth={2}
-          type="monotone"
-          dataKey="price_usd_blue"
-          stroke="#43bfb9"
-          fillOpacity={1}
-          fill="url(#price_usd_blue)"
-        />
-        <Area
-          strokeWidth={2}
-          type="monotone"
-          dataKey="price_usd_blue"
-          stroke="#43bfb9"
-          fillOpacity={1}
-          fill="url(#price_usd_blue)"
-        />
       </AreaChart>
+      <div className={"flex border-2 border-red-50 align-middle"}>
+        <p>display btc:</p>
+        <button onClick={() => setDisplayBtc(!displayBtc)}>
+          {displayBtc ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="icon icon-tabler icon-tabler-square-check"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="#2c3e50"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+              <path d="M9 12l2 2l4 -4" />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="icon icon-tabler icon-tabler-square"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="#2c3e50"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+            </svg>
+          )}
+        </button>
+      </div>
     </div>
   );
 };
