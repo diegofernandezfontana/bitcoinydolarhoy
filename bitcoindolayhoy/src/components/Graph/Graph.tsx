@@ -55,7 +55,18 @@ export const Graph = () => {
   }, []);
 
   if (!isOpen) {
-    return <button onClick={() => setIsOpen(true)}> Expand</button>;
+    return (
+      <div className="w-full text-center flex justify-center cursor-pointer ">
+        <div className=" transition-all group/item duration-500">
+          <button
+            className="flex justify-center bg-blue-900 duration-200 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded"
+            onClick={() => setIsOpen(true)}
+          >
+            Mostrar grafico
+          </button>
+        </div>
+      </div>
+    );
   }
 
   //https://tailwindcss.com/docs/customizing-colors
@@ -141,43 +152,41 @@ export const Graph = () => {
           stroke="#fff"
         />
       </AreaChart>
-      <div className={"flex border-2 border-red-50 align-middle"}>
-        <p>display btc:</p>
-        <button onClick={() => setDisplayBtc(!displayBtc)}>
-          {displayBtc ? (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="icon icon-tabler icon-tabler-square-check"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="#2c3e50"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
-              <path d="M9 12l2 2l4 -4" />
-            </svg>
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="icon icon-tabler icon-tabler-square"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="#2c3e50"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
-            </svg>
-          )}
+      <div className={"flex align-middle"}>
+        <p className="">Mostrar precios BTC </p>{" "}
+        <button
+          className="relative h-full w-24"
+          onClick={() => setDisplayBtc(!displayBtc)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute duration-200"
+            width="24"
+            height="24"
+            opacity={displayBtc ? 1 : 0}
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="#fff"
+            fill="#16a34a"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+            <path d="M9 12l2 2l4 -4" />
+          </svg>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="#2c3e50"
+            fill="none"
+          >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M3 3m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+          </svg>
         </button>
       </div>
     </div>

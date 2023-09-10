@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import UsdIcon from '../components/icons/UsdIcon.astro';
 import PesoIcon from '../components/icons/PesoIcon.astro';
 import BtcIcon from '../components/icons/BtcIcon.astro';
+import Title from '../components/Title.astro';
+import Footer from '../components/Footer.astro';
 import { Graph } from '../components/Graph/Graph';
 import Price from '../components/Price.astro';
 
@@ -10,11 +12,21 @@ import Price from '../components/Price.astro';
 
 
 <Layout title="BitcoinDolarHoy">
-	<div class="max-w-[1200px] mx-auto">
-		<h1 class="text-6xl font-bold text-center">
-			<span class="text-orange-500">Bitcoin</span>
-			 y Dollar Hoy
-		</h1>	
+	<div class="
+		max-w-[1200px] mx-auto 
+		flex 
+		flex-col  
+		min-h-screen
+		px-4 
+		pt-16 
+		h-full 
+		sm:px-6 
+		lg:px-8 
+		lg:pt-20
+		justify-start
+		"
+	>
+		<Title />
 		<div class="grid my-16 grid-cols-2 sm:grid-cols-2 md:grid-cols-4 md:gap-x-0 lg:gap-y-0 lg:gap-x-8">
 			<Price name='US Dollar' price={1}><UsdIcon/></Price>
 			<Price name='Peso' price={720}><PesoIcon /></Price>
@@ -22,11 +34,6 @@ import Price from '../components/Price.astro';
 			<Price name='Bitcoin (Pesos)' price={26000 * 720}><BtcIcon/></Price>
 		</div>
 		<Graph client:only="react" />
-		<p>
-			Si queres poner un cartel publicitario 
-			<a href="https://e0492u5avbr.typeform.com/to/AqnQjfAV" target="_blank">
-				contactanos
-			</a>
-		</p>
+		<Footer />
 	</div>
 </Layout>
