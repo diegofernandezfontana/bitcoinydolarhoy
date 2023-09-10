@@ -8,34 +8,58 @@ interface PointPrices {
 }
 
 interface RowProps {
+  id: string;
   name: string;
   price: number;
   display: boolean;
+  color: string;
 }
 
-const Row = ({ price, display, name }: RowProps) => {
+const Row = ({ id, price, display, name, color }: RowProps) => {
   if (!display) {
     return null;
   }
 
   return (
-    <p className="text-slate-600 text-sm mt-0.5">
-      <span className="">{name}: </span>
-      {new Intl.NumberFormat("de-DE", {
-        maximumFractionDigits: 0,
-      }).format(price)}
-    </p>
+    <div className="flex items-center ">
+      {/* could be usefull to rewrite */}
+      {id === "price_usd_oficial" ? (
+        <div className={`w-2 h-2 mr-1 bg-[#16a34a] rounded `}></div>
+      ) : null}
+      {id === "price_usd_blue" ? (
+        <div className={`w-2 h-2 mr-1 bg-[#0e7490] rounded `}></div>
+      ) : null}
+      {id === "price_btc_usd_oficial" ? (
+        <div className={`w-2 h-2 mr-1 bg-[#f59e0b] rounded `}></div>
+      ) : null}
+
+      {id === "price_btc_usd_blue" ? (
+        <div className={`w-2 h-2 mr-1 bg-[#d97706] rounded `}></div>
+      ) : null}
+
+      <p className="text-slate-600 text-sm mt-0.5">
+        <span className="">{name}: </span>$
+        {new Intl.NumberFormat("de-DE", {
+          maximumFractionDigits: 0,
+        }).format(price)}
+      </p>
+    </div>
   );
 };
+interface Element {
+  id: string;
+  name: string;
+  color: string;
+  display: boolean;
+}
 
-const CustomTooltip = (props: TooltipProps<any, any>) => {
-  const {
-    active,
-    payload: payloadProps,
-    label,
-    displayBtcUsdOficial,
-    displayBtcUsdBlue,
-  } = props;
+interface MoreProps {
+  elements: Element[];
+}
+type TooltipExtendedProps = TooltipProps<any, any> & MoreProps;
+
+const CustomTooltip = (props: TooltipExtendedProps) => {
+  const { active, payload: payloadProps, label, elements } = props;
 
   if (!payloadProps) {
     return;
@@ -46,34 +70,25 @@ const CustomTooltip = (props: TooltipProps<any, any>) => {
     return;
   }
 
-  const { value, payload } = element;
-  const {
-    price_btc_usd_blue,
-    price_usd_oficial,
-    price_usd_blue,
-    price_btc_usd_oficial,
-  } = payload as PointPrices;
+  const { payload } = element;
   const dateFormatted = label.replace(/-/g, "/");
 
   return (
     <div className="bg-white p-3 rounded">
       <p className="text-slate-700 font-bold	text-sm">{dateFormatted}</p>
-
-      <Row name="Dolar oficial" display={true} price={price_usd_oficial} />
-      <Row name="Dolar blue" display={true} price={price_usd_blue} />
-      <Row
-        name="Btc (Oficial)"
-        display={displayBtcUsdOficial}
-        price={price_btc_usd_oficial}
-      />
-      <Row
-        name="Btc (Blue)"
-        display={displayBtcUsdBlue}
-        price={price_btc_usd_blue}
-      />
+      {elements.map((el) => {
+        return (
+          <Row
+            id={el.id}
+            name={el.name}
+            price={payload[el.id]}
+            display={el.display}
+            color={el.color}
+          />
+        );
+      })}
     </div>
   );
-  // }
 };
 
 export default CustomTooltip;

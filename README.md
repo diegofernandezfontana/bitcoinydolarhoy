@@ -26,11 +26,11 @@ Project that will get and transform the historic data and it will convert it to 
 - [x] Find the historic data of the official and dollar blue.
 - [x] Save and transform data.
 - [x] Add readme for historial data integration. How to run, info. etc
-- [ ] Add Page with graph + historical comparission.
-- [ ] Add readme next.js proyect
+- [x] Add Page with graph + historical comparission.
+- [x] Deploy to prod (Vercel)
 - [ ] Add Scrapper to get the latest price.
 - [ ] Add Page with current prices of btc/dollar.
-- [ ] Deploy to prod
+- [ ] Add readme Astro proyect
 - [ ] Find remaining btc prices
 
 This project will start 05/09.

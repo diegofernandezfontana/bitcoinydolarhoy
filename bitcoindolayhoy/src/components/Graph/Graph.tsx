@@ -80,10 +80,30 @@ export const Graph = () => {
   const btcUsdBlue = "#d97706";
 
   const elements = [
-    { id: "price_usd_oficial", color: usdOfficialColor, display: true },
-    { id: "price_usd_blue", color: usdBlueColor, display: true },
-    { id: "price_btc_usd_oficial", color: btcUsdOficial, display: displayBtc },
-    { id: "price_btc_usd_blue", color: btcUsdBlue, display: displayBtc },
+    {
+      id: "price_usd_oficial",
+      name: "Dolar Oficial",
+      color: usdOfficialColor,
+      display: true,
+    },
+    {
+      id: "price_usd_blue",
+      name: "Dolar Blue",
+      color: usdBlueColor,
+      display: true,
+    },
+    {
+      id: "price_btc_usd_oficial",
+      name: "BTC (Dolar Oficial)",
+      color: btcUsdOficial,
+      display: displayBtc,
+    },
+    {
+      id: "price_btc_usd_blue",
+      name: "BTC (Dolar Blue)",
+      color: btcUsdBlue,
+      display: displayBtc,
+    },
   ];
 
   return (
@@ -101,14 +121,7 @@ export const Graph = () => {
           height={80}
           tick={<CustomizedAxisTick />}
         />
-        <Tooltip
-          content={
-            <CustomTooltip
-              displayBtcUsdOficial={displayBtc}
-              displayBtcUsdBlue={displayBtc}
-            />
-          }
-        />
+        <Tooltip content={<CustomTooltip elements={elements} />} />
         <YAxis tick={<CustomYAxsis />} width={2} />
 
         {elements.map((el) => {
