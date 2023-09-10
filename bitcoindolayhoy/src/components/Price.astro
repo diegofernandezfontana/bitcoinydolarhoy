@@ -16,10 +16,19 @@ const { name, price } = Astro.props;
       <div class="flex justify-center">
         <slot >
         </div>
-        <p class="content-cente group-hover:text-gray-800 text-3xl font-bold">${ 
+        <!-- <p class="content-cente group-hover:text-gray-800 text-3xl font-bold">
+          ${ 
         new Intl.NumberFormat("de-DE", {
           maximumFractionDigits: 0,
-        }).format(price)}</p>
+        }).format(price)}</p> -->
+
+        <p class="content-cente group-hover:text-gray-800 text-2xl font-bold">
+          {price.toLocaleString('es-ar', {
+            style: 'currency',
+            currency: 'ARS',
+            minimumFractionDigits: 2
+        })}
+
       </div>
     </div>
   </div>
