@@ -8,8 +8,8 @@ const CustomizedAxisTick = (props) => {
           y={0}
           dy={16}
           textAnchor="end"
-          fill="#666"
-          transform="rotate(-35)"
+          fill="#fff"
+          transform="rotate(-25)"
         >
           {payload.value}
         </text>

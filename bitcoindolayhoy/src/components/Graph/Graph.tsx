@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import CustomizedAxisTick from "./CustomXAxis";
 import CustomTooltip from "./CustomTooltip";
+import CustomYAxsis from "./CustomYAxsis";
 
 interface Prices {
   price_btc: number;
@@ -40,6 +41,7 @@ const Stop = (el: { id: string; color: string }) => {
     </defs>
   );
 };
+
 export const Graph = () => {
   const [width, setWidth] = useState<number>(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -98,7 +100,7 @@ export const Graph = () => {
           tick={<CustomizedAxisTick />}
         />
         <Tooltip content={<CustomTooltip />} />
-        <YAxis tick={<div />} width={2} />
+        <YAxis tick={<CustomYAxsis />} width={2} />
 
         {elements.map((el) => {
           return (
@@ -138,9 +140,10 @@ export const Graph = () => {
           );
         })}
         <CartesianGrid
-          strokeDasharray="10  5"
-          opacity={0.4}
+          strokeDasharray="3 3"
+          opacity={0.1}
           verticalPoints={[]}
+          stroke="#fff"
         />
       </AreaChart>
       <div className={"flex border-2 border-red-50 align-middle"}>
