@@ -1,7 +1,7 @@
 import Cron from "cron";
 import { JSDOM } from "jsdom";
 
-const CRON_EXECUTION_TIME = "* * * * * *";
+const CRON_EXECUTION_TIME = "0-59 * * * *";
 
 const HTMLFILE = "file.html";
 
@@ -56,7 +56,7 @@ const readFileAndGetDom = async (): Promise<JSDOM> => {
 };
 
 const handlerFunction = async () => {
-  const date = obtenerFechaFormato();
+  const date = getDateDDMMYYYY_HHMM();
   console.log("Starting script at: ", date.toString());
 
   await getAndSaveHTML();
@@ -84,17 +84,17 @@ const handlerFunction = async () => {
   );
 };
 
-const obtenerFechaFormato = () => {
+const getDateDDMMYYYY_HHMM = () => {
   const fecha = new Date();
 
-  const dia = String(fecha.getDate()).padStart(2, "0");
-  const mes = String(fecha.getMonth() + 1).padStart(2, "0"); // Los meses en JS comienzan en 0 para enero, 1 para febrero, etc.
-  const ano = fecha.getFullYear();
+  const day = String(fecha.getDate()).padStart(2, "0");
+  const month = String(fecha.getMonth() + 1).padStart(2, "0"); // Los meses en JS comienzan en 0 para enero, 1 para febrero, etc.
+  const year = fecha.getFullYear();
 
-  const horas = String(fecha.getHours()).padStart(2, "0");
-  const minutos = String(fecha.getMinutes()).padStart(2, "0");
+  const hour = String(fecha.getHours()).padStart(2, "0");
+  const min = String(fecha.getMinutes()).padStart(2, "0");
 
-  return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
+  return `${day}/${month}/${year} ${hour}:${min}`;
 };
 
 const startNow = true;
