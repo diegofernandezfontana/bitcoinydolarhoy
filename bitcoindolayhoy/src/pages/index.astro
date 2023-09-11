@@ -11,16 +11,14 @@ import Price from '../components/Price.astro';
 import lastUpdateJson from '../last_update.json';
 
 
-console.log(lastUpdateJson);
 let {precio_usd_blue_compra, precio_usd_blue_venta, precio_usd_oficial_venta, precio_usd_oficial_compra, date} = lastUpdateJson;
 const precioUsdBlueCompra = Number(precio_usd_blue_compra)
 const precioUsdOficialCompra = Number(precio_usd_oficial_venta)
 ---
 
 
-
 <Layout title="BitcoinDolarHoy">
-	<div class="max-w-[1200px] mx-auto flex flex-col  min-h-screen px-4 pt-16 h-full sm:px-6 lg:px-8 lg:pt-2 justify-start">
+	<div class="max-w-[1200px] mx-auto flex flex-col min-h-screen px-4 pt-16 h-full	sm:px-6 lg:px-8 lg:pt-20 justify-start">
 		<Title />
 		<div class="grid my-16 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 md:gap-x-0 lg:gap-y-0 ">
 			<Price name='Peso' price={1}><UsdIcon/></Price>
