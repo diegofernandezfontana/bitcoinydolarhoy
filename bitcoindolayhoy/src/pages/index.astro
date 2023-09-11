@@ -8,33 +8,27 @@ import Footer from '../components/Footer.astro';
 import { Graph } from '../components/Graph/Graph';
 import Price from '../components/Price.astro';
 
+import lastUpdateJson from '../last_update.json';
+
+
+console.log(lastUpdateJson);
+let {precio_usd_compra, precio_usd_venta, date} = lastUpdateJson;
+const precioUsdCompra = Number(precio_usd_compra)
 ---
 
 
+
 <Layout title="BitcoinDolarHoy">
-	<div class="
-		max-w-[1200px] mx-auto 
-		flex 
-		flex-col  
-		min-h-screen
-		px-4 
-		pt-16 
-		h-full 
-		sm:px-6 
-		lg:px-8 
-		lg:pt-20
-		justify-start
-		"
-	>
+	<div class="max-w-[1200px] mx-auto flex flex-col  min-h-screen px-4 pt-16 h-full sm:px-6 lg:px-8 lg:pt-2 justify-start">
 		<Title />
 		<div class="grid my-16 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 md:gap-x-0 lg:gap-y-0 ">
 			<Price name='Peso' price={1}><UsdIcon/></Price>
 			<Price name='Dólar (Oficial)' price={320}><PesoIcon /></Price>
-			<Price name='Dólar (Blue)' price={720}><PesoIcon /></Price>
+			<Price name='Dólar (Blue)' price={precioUsdCompra}><PesoIcon /></Price>
 			<Price name='Bitcoin (Dólar Oficial)' price={26000 * 320}> <BtcIcon/></Price>
-			<Price name='Bitcoin (Dólar Blue)' price={26000 * 720}><BtcIcon/></Price>
+			<Price name='Bitcoin (Dólar Blue)' price={26000 * precioUsdCompra}><BtcIcon/></Price>
 		</div>
 		<Graph client:only="react" />
-		<Footer />
+		<Footer date={date} />
 	</div>
 </Layout>
