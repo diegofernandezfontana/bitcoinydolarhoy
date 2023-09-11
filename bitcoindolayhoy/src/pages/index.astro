@@ -20,13 +20,14 @@ const precioUsdOficialCompra = Number(precio_usd_oficial_venta)
 <Layout title="BitcoinDolarHoy">
 	<div class="max-w-[1200px] mx-auto flex flex-col min-h-screen px-4 pt-16 h-full	sm:px-6 lg:px-8 lg:pt-20 justify-start">
 		<Title />
-		<div class="grid my-16 grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 md:gap-x-0 lg:gap-y-0 ">
-			<Price name='Peso' price={1}><UsdIcon/></Price>
-			<Price name='Dólar (Oficial)' price={precioUsdOficialCompra}><PesoIcon /></Price>
-			<Price name='Dólar (Blue)' price={precioUsdBlueCompra}><PesoIcon /></Price>
-			<Price name='Bitcoin (Dólar Oficial)' price={25090 * precioUsdOficialCompra}> <BtcIcon/></Price>
-			<Price name='Bitcoin (Dólar Blue)' price={25090 * precioUsdBlueCompra}><BtcIcon/></Price>
-		</div>
+		<section class="grid my-16 grid-cols-2 grid-rows-3 sm:grid-cols-3 md:grid-cols-3 sm:grid-rows-2 lg:grid-cols-3 md:gap-x-0 lg:gap-y-0 ">
+			<Price col={1} row={1} spanText="" name='Peso' span="(Oficial)" price={1}><PesoIcon /></Price>
+			<Price col={1} row={2} spanText="(Oficial)" name='Dólar' price={precioUsdOficialCompra}><UsdIcon/></Price>
+			<Price col={1} row={3} spanText="(Blue)" name='Dólar' price={precioUsdBlueCompra}><UsdIcon/></Price>
+			<Price col={2} row={1} spanText="(Dolares)" name='Bitcoin' price={25090}> <BtcIcon/></Price>
+			<Price col={2} row={2} spanText="(Pesos Dólar Oficial)" name="Bitcoin" price={25090 * precioUsdOficialCompra}> <BtcIcon/></Price>
+			<Price col={2} row={3} spanText="(Pesos Dólar Blue)" name="Bitcoin"  price={25090 * precioUsdBlueCompra}><BtcIcon/></Price>
+		</section>
 		<Graph client:only="react" />
 		<Footer date={date} />
 	</div>

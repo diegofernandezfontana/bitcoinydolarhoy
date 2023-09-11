@@ -3,24 +3,26 @@
 interface Props {
 	name: string;
   price: number;
+  col: number;
+  row: number;
+  spanText: string
 }
-const { name, price } = Astro.props;
+const { name, price, col, row, spanText} = Astro.props;
 
 ---
 
 
-<section class="font-medium rounded-lg min-h-[200px] text-center border-blue-950 transition-all md:m-2 lg:m-4 duration-200 ease-in-out hover:scale-100 scale-90 cursor-pointer">
+<article class=`font-medium col-start-${col} row-start-${row} sm:row-auto sm:col-auto rounded-lg min-h-[200px] text-center transition-all md:m-2 lg:mx-10  duration-200 ease-in-out hover:scale-100 scale-90 cursor-pointer`>
   <div class="h-full w-full ">
-    <div class="group grid w-full h-full justify-center rounded-lg border-2 p-3  hover:bg-slate-50 hover:text-gray-900 duration-200 ease-in-out ">
-      <h3 class="text-xl font-light w-full text-center content-center">{name}</h3>
-      <div class="flex justify-center">
-        <slot >
+    <div class="group grid w-full h-full justify-center rounded-lg border p-3 hover:bg-slate-50 hover:text-gray-900 duration-200 ease-in-out ">
+        <h3 class="text-xl font-light w-full text-center content-center">{name} <span class="ml-1 text-lg">{spanText}</span></h3>
+        <div class="flex justify-center">
+          <slot >
         </div>
-        <p class="content-cente group-hover:text-gray-800 sm:text-2xl text-xl font-bold">
-          ${price.toLocaleString('de-DE', { minimumFractionDigits: 0 })}
-          
-        </p>
+        <h2 class="content-cente group-hover:text-gray-800 sm:text-2xl text-xl font-bold">
+          $ {price.toLocaleString('de-DE', { minimumFractionDigits: 0 })}
+        </h2>
       </div>
     </div>
   </div>
-</section>
+</article>
