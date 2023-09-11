@@ -1,0 +1,14 @@
+{
+  "name": "cron-bitcoindolarhoy",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "cron": "^2.4.3"
+  }
+}
