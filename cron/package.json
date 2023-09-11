@@ -3,12 +3,14 @@
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
+    "@types/jsdom": "^21.1.2",
     "bun-types": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "cron": "^2.4.3"
+    "cron": "^2.4.3",
+    "jsdom": "^22.1.0"
   }
 }

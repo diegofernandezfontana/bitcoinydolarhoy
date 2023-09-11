@@ -1,42 +1,75 @@
-console.log("Hello via Bun!");
-
 import Cron from "cron";
+import { JSDOM } from "jsdom";
 
-const CRON_EXECUTION_TIME = "0 */1 * * * *";
-const outputPath = "./src/file.html";
+const CRON_EXECUTION_TIME = "* * * * * *";
+
+const HTMLFILE = "file.html";
+
+const OUTPUT_DIR = "./src/";
+
+const getOficialUsdPrice = (dom: JSDOM) => {
+  const parentElement = dom.window.document.querySelectorAll(
+    "[href='/cotizaciondolaroficial']"
+  )[0].parentNode;
+
+  if (!parentElement) {
+    throw new Error("Dolar oficial price not found");
+  }
+
+  const compraValue =
+    parentElement.querySelector(".compra .val")?.textContent || "";
+  const ventaValue =
+    parentElement.querySelector(".venta .val")?.textContent || "";
+
+  return [compraValue.replace("$", ""), ventaValue.replace("$", "")];
+};
+
+const getBlueUsdPrice = (dom: JSDOM) => {
+  const parentElement = dom.window.document.querySelectorAll(
+    "[href='/cotizaciondolarblue']"
+  )[0].parentNode;
+
+  if (!parentElement) {
+    throw new Error("Dolar blue price not found");
+  }
+
+  const compraValue =
+    parentElement.querySelector(".compra .val")?.textContent || "";
+  const ventaValue =
+    parentElement.querySelector(".venta .val")?.textContent || "";
+
+  return [compraValue.replace("$", ""), ventaValue.replace("$", "")];
+};
+
+const getAndSaveHTML = async () => {
+  const response = await fetch("https://dolarhoy.com/");
+  const dolarHoyHtml = await response.text();
+
+  await Bun.write(OUTPUT_DIR + HTMLFILE, dolarHoyHtml);
+};
+
+const readFileAndGetDom = async (): Promise<JSDOM> => {
+  const file = await Bun.file(OUTPUT_DIR + HTMLFILE);
+  const text = await file.text();
+
+  return new JSDOM(text);
+};
 
 const handlerFunction = async () => {
   const date = obtenerFechaFormato();
+  console.log("Starting script at: ", date.toString());
 
-  console.log("Handler func executed at:", String(date));
-  const response = await fetch("https://dolarhoy.com/");
-  const dolarHoyHtml = await response.text(); // HTML string
+  await getAndSaveHTML();
+  const dom = await readFileAndGetDom();
 
-  await Bun.write(outputPath, dolarHoyHtml);
-
-  const file = await Bun.file(outputPath);
-  const text = await file.text();
-
-  const compraRegex = /<div class="compra">.*?<div class="val">\$(\d+)<\/div>/s;
-  const ventaRegex = /<div class="venta">.*?<div class="val">\$(\d+)<\/div>/s;
-
-  //retorna un [<div...> , "PRICE_USD"]
-  const valorCompra = text.match(compraRegex);
-  const valorVenta = text.match(ventaRegex);
-
-  const precioCompra = valorCompra[1];
-  if (!precioCompra) {
-    throw new Error("No se encontro el precio de compra");
-  }
-
-  const precioVenta = valorVenta[1];
-  if (!precioVenta) {
-    throw new Error("No se encontro el precio de venta");
-  }
+  const [priceUsdBlueBuy, priceUsdBlueSell] = getBlueUsdPrice(dom);
+  const [priceUsdOficialBuy, priceUsdOficialSell] = getOficialUsdPrice(dom);
 
   const data = {
-    precio_usd_compra: precioCompra,
-    precio_usd_venta: precioVenta,
+    precio_usd_blue_compra: priceUsdBlueBuy,
+    precio_usd_blue_venta: priceUsdBlueSell,
+    precio_usd_oficial_compra: priceUsdOficialBuy,
+    precio_usd_oficial_venta: priceUsdOficialSell,
     date,
   };
 
@@ -45,7 +78,10 @@ const handlerFunction = async () => {
     "../bitcoindolayhoy/src/last_update.json",
     JSON.stringify(data)
   );
-  console.log("file saved!");
+
+  console.log(
+    "file saved! in last_update.json and in /bitcoindolarhoy/src/last_update.json"
+  );
 };
 
 const obtenerFechaFormato = () => {
@@ -63,9 +99,9 @@ const obtenerFechaFormato = () => {
 
 const startNow = true;
 
-new Cron.CronJob(
+const job = new Cron.CronJob(
   CRON_EXECUTION_TIME,
-  () => handlerFunction,
+  handlerFunction,
   null,
   startNow,
   "America/Los_Angeles"
