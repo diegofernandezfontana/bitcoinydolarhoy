@@ -21,9 +21,7 @@ const googleTagSource = isProd ? googleTagManager : ""
 		<title>{title}</title>
 		<script async src={googleTagSource}></script> 
 		<script>
-			if(!isProd){
-				return;
-			}
+
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
 			gtag('js', new Date());
