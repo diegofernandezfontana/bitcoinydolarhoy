@@ -1,79 +1,29 @@
 import Cron from "cron";
-import { JSDOM } from "jsdom";
 
-const CRON_EXECUTION_TIME = "0-59 * * * *";
+import {
+  getAndSaveUsdHTML,
+  readFileAndGetDom,
+} from "./UsdGenerator/getDolarPrice";
+import { getDateDDMMYYYY_HHMM } from "./utils";
+import { UsdGenerator } from "./UsdGenerator/UsdGenerator";
 
 const HTMLFILE = "file.html";
-
 const OUTPUT_DIR = "./src/";
-
-const getOficialUsdPrice = (dom: JSDOM) => {
-  const parentElement = dom.window.document.querySelectorAll(
-    "[href='/cotizaciondolaroficial']"
-  )[0].parentNode;
-
-  if (!parentElement) {
-    throw new Error("Dolar oficial price not found");
-  }
-
-  const compraValue =
-    parentElement.querySelector(".compra .val")?.textContent || "";
-  const ventaValue =
-    parentElement.querySelector(".venta .val")?.textContent || "";
-
-  return [compraValue.replace("$", ""), ventaValue.replace("$", "")];
-};
-
-const getBlueUsdPrice = (dom: JSDOM) => {
-  const parentElement = dom.window.document.querySelectorAll(
-    "[href='/cotizaciondolarblue']"
-  )[0].parentNode;
-
-  if (!parentElement) {
-    throw new Error("Dolar blue price not found");
-  }
-
-  const compraValue =
-    parentElement.querySelector(".compra .val")?.textContent || "";
-  const ventaValue =
-    parentElement.querySelector(".venta .val")?.textContent || "";
-
-  return [compraValue.replace("$", ""), ventaValue.replace("$", "")];
-};
-
-const getAndSaveHTML = async () => {
-  const response = await fetch("https://dolarhoy.com/");
-  const dolarHoyHtml = await response.text();
-
-  await Bun.write(OUTPUT_DIR + HTMLFILE, dolarHoyHtml);
-};
-
-const readFileAndGetDom = async (): Promise<JSDOM> => {
-  const file = await Bun.file(OUTPUT_DIR + HTMLFILE);
-  const text = await file.text();
-
-  return new JSDOM(text);
-};
 
 const handlerFunction = async () => {
   const date = getDateDDMMYYYY_HHMM();
   console.log("Starting script at: ", date.toString());
+  const outputUsdBuilder = new UsdGenerator();
 
-  await getAndSaveHTML();
-  const dom = await readFileAndGetDom();
+  await getAndSaveUsdHTML(OUTPUT_DIR, HTMLFILE);
+  const dom = await readFileAndGetDom(OUTPUT_DIR, HTMLFILE);
 
-  const [priceUsdBlueBuy, priceUsdBlueSell] = getBlueUsdPrice(dom);
-  const [priceUsdOficialBuy, priceUsdOficialSell] = getOficialUsdPrice(dom);
+  outputUsdBuilder.setBlueUsdPrice(dom);
+  outputUsdBuilder.setOficialUsdPrice(dom);
 
-  const data = {
-    precio_usd_blue_compra: priceUsdBlueBuy,
-    precio_usd_blue_venta: priceUsdBlueSell,
-    precio_usd_oficial_compra: priceUsdOficialBuy,
-    precio_usd_oficial_venta: priceUsdOficialSell,
-    date,
-  };
+  const data = outputUsdBuilder.getOutputData(date);
 
-  await Bun.write("./src/last_update.json", JSON.stringify(data));
+  await Bun.write("./src/output/last_update.json", JSON.stringify(data));
   await Bun.write(
     "../bitcoindolayhoy/src/last_update.json",
     JSON.stringify(data)
@@ -84,21 +34,9 @@ const handlerFunction = async () => {
   );
 };
 
-const getDateDDMMYYYY_HHMM = () => {
-  const fecha = new Date();
-
-  const day = String(fecha.getDate()).padStart(2, "0");
-  const month = String(fecha.getMonth() + 1).padStart(2, "0"); // Los meses en JS comienzan en 0 para enero, 1 para febrero, etc.
-  const year = fecha.getFullYear();
-
-  const hour = String(fecha.getHours()).padStart(2, "0");
-  const min = String(fecha.getMinutes()).padStart(2, "0");
-
-  return `${day}/${month}/${year} ${hour}:${min}`;
-};
-
 const startNow = true;
 
+const CRON_EXECUTION_TIME = "0-59 * * * *";
 const job = new Cron.CronJob(
   CRON_EXECUTION_TIME,
   handlerFunction,
