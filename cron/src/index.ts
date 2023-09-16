@@ -1,33 +1,32 @@
 import Cron from "cron";
 
-import {
-  getAndSaveUsdHTML,
-  readFileAndGetDom,
-} from "./UsdGenerator/getDolarPrice";
 import { getDateDDMMYYYY_HHMM } from "./utils";
 import { UsdGenerator } from "./UsdGenerator/UsdGenerator";
-
-const HTMLFILE = "file.html";
-const OUTPUT_DIR = "./src/";
+import { BtcGeneratr } from "./BtcGenerator/BtcGenerator";
 
 const handlerFunction = async () => {
   const date = getDateDDMMYYYY_HHMM();
   console.log("Starting script at: ", date.toString());
-  const outputUsdBuilder = new UsdGenerator();
 
-  await getAndSaveUsdHTML(OUTPUT_DIR, HTMLFILE);
-  const dom = await readFileAndGetDom(OUTPUT_DIR, HTMLFILE);
+  // USD GET, SET PRICE
+  const usdGenerator = new UsdGenerator();
+  await usdGenerator.start();
+  const usdResult = await usdGenerator.getOutputData(date);
 
-  outputUsdBuilder.setBlueUsdPrice(dom);
-  outputUsdBuilder.setOficialUsdPrice(dom);
+  // BTC GET, SET PRICE
+  const btcGenerator = new BtcGeneratr();
+  await btcGenerator.start();
+  const btcUsdResult = btcGenerator.getOutputData();
+  const final = { ...usdResult, ...btcUsdResult };
 
-  const data = outputUsdBuilder.getOutputData(date);
-
-  await Bun.write("./src/output/last_update.json", JSON.stringify(data));
+  console.log("FINAL:", final);
   await Bun.write(
-    "../bitcoindolayhoy/src/last_update.json",
-    JSON.stringify(data)
+    import.meta.dir + "/" + "output/last_update.json",
+    JSON.stringify(final)
   );
+
+  const bitcoinDolarHoyPath = "../bitcoindolayhoy/src/last_update.json";
+  await Bun.write(bitcoinDolarHoyPath, JSON.stringify(final));
 
   console.log(
     "file saved! in last_update.json and in /bitcoindolarhoy/src/last_update.json"
@@ -36,7 +35,7 @@ const handlerFunction = async () => {
 
 const startNow = true;
 
-const CRON_EXECUTION_TIME = "0-59 * * * *";
+const CRON_EXECUTION_TIME = "* * * * * *";
 const job = new Cron.CronJob(
   CRON_EXECUTION_TIME,
   handlerFunction,

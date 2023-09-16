@@ -1,17 +1,29 @@
 import { JSDOM } from "jsdom";
+import { getAndSaveUsdHTML, readFileAndGetDom } from "./getDolarPrice";
 
 export class UsdGenerator {
-  public priceUsdBlueBuy: string;
-  priceUsdBlueSell: string;
-  priceUsdOficialBuy: string;
-  priceUsdOficialSell: string;
+  private priceUsdBlueBuy: string;
+  private priceUsdBlueSell: string;
+  private priceUsdOficialBuy: string;
+  private priceUsdOficialSell: string;
 
+  public static OUTPUT_DIR = "./src/UsdGenerator/";
+  public static HTML_FILE = "file.html";
   constructor() {
     this.priceUsdBlueBuy = "";
     this.priceUsdBlueSell = "";
     this.priceUsdOficialBuy = "";
     this.priceUsdOficialSell = "";
   }
+
+  start = async (): Promise<void> => {
+    await getAndSaveUsdHTML(UsdGenerator.OUTPUT_DIR, UsdGenerator.HTML_FILE);
+
+    const dom = await readFileAndGetDom(UsdGenerator.HTML_FILE);
+
+    this.setBlueUsdPrice(dom);
+    this.setOficialUsdPrice(dom);
+  };
 
   setBlueUsdPrice = (dom: JSDOM) => {
     const parentElement = dom.window.document.querySelectorAll(
