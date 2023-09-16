@@ -10,6 +10,7 @@
     "get:btc": "node get-btc",
     "get:usd": "node get-usd",
     "get:aggregate": "node get-aggregate-data",
-    "cp:static": "cp ./data/days-with-data.json ../bitcoindolayhoy/src/data.json"
+    "cp:static": "cp ./data/days-with-data.json ../bitcoindolayhoy/src/data.json",
+    "get:all": "node get-btc && node get-usd && node get-aggregate-data && cp ./data/days-with-data.json ../bitcoindolayhoy/src/data.json"
   }
 }

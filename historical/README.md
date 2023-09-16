@@ -24,3 +24,6 @@ In order to get the info from each script, we need node installed. Also its need
 ---
 
 Better data can be required later on, since there are a lot of days where the price of the USD is not as precise and some days are also missing.
+
+Run all SCRIPTS:
+`yarn get:all`
