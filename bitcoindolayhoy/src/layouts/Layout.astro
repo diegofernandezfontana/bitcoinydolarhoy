@@ -3,7 +3,11 @@ interface Props {
 	title: string;
 }
 
-const { title } = Astro.props;
+const { title, } = Astro.props;
+const isProd = import.meta.env.ENVIROMENT;
+const googleTagManager = "https://www.googletagmanager.com/gtag/js?id=G-X8CLSNHC1C"
+const googleTagSource = isProd ? googleTagManager : ""
+
 ---
 
 <!doctype html>
@@ -15,19 +19,17 @@ const { title } = Astro.props;
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<script async src={googleTagSource}></script> 
+		<script>
+			if(!isProd){
+				return;
+			}
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
 
-		<!-- Google tag (gtag.js) -->
-
-		<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-X8CLSNHC1C"></script> -->
-<script>
-/*  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-X8CLSNHC1C');
-
-*/
-	</script>
+			gtag('config', 'G-X8CLSNHC1C');
+		</script>
 	</head>
 	<body class="bg-slate-900 min-h-screen h-full max-w-container ">
 		<main class="min-h-screen max-w-container text-white">
