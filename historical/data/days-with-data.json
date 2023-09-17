@@ -16453,5 +16453,25 @@
     "price_btc": 26531.39556626326,
     "price_usd_blue": 720,
     "price_usd_oficial": 347
+  },
+  "18-09-2023": {
+    "price_btc": 26520.988254783886,
+    "price_usd_blue": 728,
+    "price_usd_oficial": 347
+  },
+  "19-09-2023": {
+    "price_btc": 26741.461110948952,
+    "price_usd_blue": 730,
+    "price_usd_oficial": 347
+  },
+  "20-09-2023": {
+    "price_btc": 27219.296874634216,
+    "price_usd_blue": 725,
+    "price_usd_oficial": 347
+  },
+  "21-09-2023": {
+    "price_btc": 26559.457866669316,
+    "price_usd_blue": 735,
+    "price_usd_oficial": 347
   }
 }

@@ -36,6 +36,8 @@ const handlerFunction = async () => {
 const startNow = true;
 
 const CRON_EXECUTION_TIME = "* * * * * *";
+
+/*
 const job = new Cron.CronJob(
   CRON_EXECUTION_TIME,
   handlerFunction,
@@ -43,3 +45,6 @@ const job = new Cron.CronJob(
   startNow,
   "America/Los_Angeles"
 );
+*/
+
+await handlerFunction();

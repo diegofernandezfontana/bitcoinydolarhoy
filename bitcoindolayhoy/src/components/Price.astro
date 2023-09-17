@@ -9,10 +9,17 @@ interface Props {
 }
 const { name, price, col, row, spanText} = Astro.props;
 
+const column = `sm:col-start-${col} md:col-start-auto`
+const rowCss = `row-start-${row} md:row-start-auto`
+
 ---
 
 
-<article class=`font-medium col-start-${col} row-start-${row} sm:row-auto sm:col-auto rounded-lg min-h-[200px] text-center transition-all md:m-2 lg:mx-10  duration-200 ease-in-out hover:scale-100 scale-90 cursor-pointer`>
+<article class=`${column} ${rowCss} 
+    lg:mx-10 rounded-lg 
+    min-h-[200px]
+    text-center
+    transition-all duration-200 ease-in-out hover:scale-95 scale-90 cursor-pointer`>
   <div class="h-full w-full ">
     <div class="group grid w-full h-full justify-center rounded-lg border p-3 hover:bg-slate-50 hover:text-gray-900 duration-200 ease-in-out ">
         <h3 class="text-xl font-light w-full text-center content-center">{name} <span class="ml-1 text-lg">{spanText}</span></h3>
