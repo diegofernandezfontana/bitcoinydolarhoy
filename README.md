@@ -28,9 +28,14 @@ Project that will get and transform the historic data and it will convert it to 
 - [x] Add readme for historial data integration. How to run, info. etc
 - [x] Add Page with graph + historical comparission.
 - [x] Deploy to prod (Vercel)
-- [ ] Add Scrapper to get the latest price.
-- [ ] Add Page with current prices of btc/dollar.
+- [x] Add Scrapper to get the latest price.
+- [x] Add Page with current prices of btc/dollar.
 - [ ] Add readme Astro proyect
-- [ ] Find remaining btc prices
+- [x] Find remaining btc prices
+- [ ] Automate deployment every 10 min
+- [ ] Extend readme how to run cron job.
 
 This project will start 05/09.
+
+The project is run by the bash script `run-all.sh`.
+This executes all secuntialy, first getting historical data, then running cron to get current price, then pushing bitcoindolarhoy to vercel and finally pushing tweet with current price.
