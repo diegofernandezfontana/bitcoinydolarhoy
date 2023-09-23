@@ -1,31 +1,33 @@
 #!/bin/bash
 
-#LOAD PRIVATE KEY
+#0
+export PATH=$PATH:/home/diego/.bun/bin
+
+#2
+current_dir=$(pwd)/diego/bitcoinydolarhoy
+
+#1- LOAD PRIVATE KEY
 eval "$(ssh-agent -s)"
-#ssh-add ~/.ssh/tweet-automatic
-./ssh_add.exp
-current_dir=$(pwd)
+"$current_dir"/ssh_add.exp
 
-echo "Starting the script, getting historical data"
+#3 get historical data
+#cd "$current_dir"/historical
+#bun run get:all
 
-cd ./historical
-bun run get:all
+#4 # get current price USD and BTC
+cd "$current_dir"/cron
+bun run ./src/index.ts
 
-
-# get current price USD and BTC
-cd ../cron
-bun ./src/index.ts
-
-#Copy the output from cron to bitcoindolarhoy
+#5 #Copy the output from cron to bitcoindolarhoy
 cp "$current_dir"/cron/src/output/last_update.json "$current_dir"/bitcoindolayhoy/src/last_update.json
-cd ..
+cd "$current_dir"
 
 git remote set-url origin git@github.com:diegofernandezfontana/bitcoinydolarhoy.git
-#Update
+# #Update
 git add .
 git commit -m "Auto update"
 git push origin main
 
-cd ./btcdolarhoy.tweeter
-
+# Tweet
+cd "$current_dir"/btcdolarhoy.tweeter
 bun ./src/index.ts

@@ -33,7 +33,7 @@ Project that will get and transform the historic data and it will convert it to 
 - [ ] Add readme Astro proyect
 - [x] Find remaining btc prices
 - [ ] Automate deployment every 10 min
-- [ ] Extend readme how to run cron job.
+- [x] Extend readme how to run cron job.
 
 This project will start 05/09.
 
