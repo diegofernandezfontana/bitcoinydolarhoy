@@ -13,7 +13,6 @@ export class BtcGeneratr {
   public btcPrice: any;
 
   constructor() {
-    console.log("BtcGenerator built");
     this.btcPrice = 0;
   }
 
@@ -45,5 +44,3 @@ export class BtcGeneratr {
 const btcGenerator = new BtcGeneratr();
 
 await btcGenerator.setBtcPrice();
-
-console.log(btcGenerator.btcPrice);

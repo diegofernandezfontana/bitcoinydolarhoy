@@ -18,8 +18,9 @@ eval "$(ssh-agent -s)"
 cd "$current_dir"/cron
 bun run ./src/index.ts
 
-#5 #Copy the output from cron to bitcoindolarhoy
+#5 #Copy the output from cron to bitcoindolarhoy and btcdolarhoy.tweet
 cp "$current_dir"/cron/src/output/last_update.json "$current_dir"/bitcoindolayhoy/src/last_update.json
+cp "$current_dir"/cron/src/output/last_update.json "$current_dir"/btcdolarhoy.tweeter/src/last_update.json
 cd "$current_dir"
 
 git remote set-url origin git@github.com:diegofernandezfontana/bitcoinydolarhoy.git

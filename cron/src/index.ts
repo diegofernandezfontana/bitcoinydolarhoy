@@ -19,7 +19,6 @@ const handlerFunction = async () => {
   const btcUsdResult = btcGenerator.getOutputData();
   const final = { ...usdResult, ...btcUsdResult };
 
-  console.log("FINAL:", final);
   await Bun.write(
     import.meta.dir + "/" + "output/last_update.json",
     JSON.stringify(final)
