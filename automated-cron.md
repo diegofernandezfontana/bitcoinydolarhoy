@@ -23,7 +23,7 @@ We need to set permission to ssh_add and run-all.sh since they will be run from 
 ```
 
 Open cron file :
-`cron -e`
+`crontab -e`
 
 This will open the /tmp folder where the cron is saved. the cron expression sets the time where the run will be executed. the next >> will specify the cron where to save the logs of the latest run script
 

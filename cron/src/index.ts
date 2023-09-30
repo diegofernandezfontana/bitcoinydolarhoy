@@ -6,6 +6,7 @@ import { BtcGeneratr } from "./BtcGenerator/BtcGenerator";
 
 const handlerFunction = async () => {
   const date = getDateDDMMYYYY_HHMM();
+  console.log("----- Start het historical (CRON)-----");
   console.log("Starting script at: ", date.toString());
 
   // USD GET, SET PRICE
@@ -47,3 +48,7 @@ const job = new Cron.CronJob(
 */
 
 await handlerFunction();
+console.log("FINISHED CRON");
+console.log("FINISHED CRON");
+console.log("FINISHED CRON");
+console.log("FINISHED CRON");
