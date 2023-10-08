@@ -6839,8 +6839,18 @@
     "price_usd_blue": 16,
     "price_usd_oficial": 16
   },
+  "06-06-2017": {
+    "price_btc": 2903.4438,
+    "price_usd_blue": 16,
+    "price_usd_oficial": 16
+  },
   "07-06-2017": {
     "price_btc": 2716.0588,
+    "price_usd_blue": 16,
+    "price_usd_oficial": 16
+  },
+  "08-06-2017": {
+    "price_btc": 2824.2038,
     "price_usd_blue": 16,
     "price_usd_oficial": 16
   },
@@ -16477,6 +16487,56 @@
   "22-09-2023": {
     "price_btc": 26561.133454198716,
     "price_usd_blue": 735,
+    "price_usd_oficial": 347
+  },
+  "25-09-2023": {
+    "price_btc": 26249.562897845204,
+    "price_usd_blue": 735,
+    "price_usd_oficial": 347
+  },
+  "26-09-2023": {
+    "price_btc": 26298.634678281232,
+    "price_usd_blue": 748,
+    "price_usd_oficial": 347
+  },
+  "27-09-2023": {
+    "price_btc": 26204.75759083597,
+    "price_usd_blue": 763,
+    "price_usd_oficial": 347
+  },
+  "28-09-2023": {
+    "price_btc": 26350.146895428057,
+    "price_usd_blue": 780,
+    "price_usd_oficial": 347
+  },
+  "29-09-2023": {
+    "price_btc": 27009.01375072488,
+    "price_usd_blue": 790,
+    "price_usd_oficial": 347
+  },
+  "02-10-2023": {
+    "price_btc": 27967.510579087113,
+    "price_usd_blue": 790,
+    "price_usd_oficial": 347
+  },
+  "03-10-2023": {
+    "price_btc": 27615.06488509527,
+    "price_usd_blue": 800,
+    "price_usd_oficial": 347
+  },
+  "04-10-2023": {
+    "price_btc": 27439.121946705116,
+    "price_usd_blue": 833,
+    "price_usd_oficial": 347
+  },
+  "05-10-2023": {
+    "price_btc": 27792.1112772493,
+    "price_usd_blue": 833,
+    "price_usd_oficial": 347
+  },
+  "06-10-2023": {
+    "price_btc": 27435.874615135104,
+    "price_usd_blue": 870,
     "price_usd_oficial": 347
   }
 }
