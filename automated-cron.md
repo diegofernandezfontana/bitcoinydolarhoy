@@ -53,3 +53,6 @@ expect eof
 
 
 ```
+
+Chat GPT link to remember last conversations:
+https://chat.openai.com/c/ccbaab11-1263-48bd-bc5e-fdb74f99e262

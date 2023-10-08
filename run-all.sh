@@ -1,6 +1,7 @@
 #!/bin/bash
 
-#
+#Set up path so cron knows where bun executable is
+export PATH="/usr/local/bin:$PATH"
 export PATH=$PATH:/home/.bun/bin
 export PATH=$PATH:/usr/local/bin/bun
 
@@ -32,10 +33,9 @@ cp "$current_dir"/cron/src/output/last_update.json "$current_dir"/btcdolarhoy.tw
 cd $current_dir
 
 #Push to build astro page
-#git add .
-#git commit -m "Auto update from docker file"
-#git push -f origin main
-
+git add .
+git commit -m "Auto update from docker file"
+git push -f origin main
 
 # Tweet
 cd "$current_dir"/btcdolarhoy.tweeter

@@ -1,8 +1,10 @@
 #!/bin/sh
 
-echo "-----START docker----------"
+# This is only the start docker script, this set ups the cron job, sets the path for run and gives permissions for files
+#  the cron execution time is set in my-cron-job, setting the time, the script that will be run and the logs file
+echo "--------------"
 echo "STARTING start-docker.sh"
-echo "----- start-docker---------"
+echo "--------------"
 
 service rsyslog start
 service cron start
@@ -27,6 +29,7 @@ ssh-keyscan github.com >> /root/.ssh/known_hosts
 crontab /app/my-cron-job
 service cron start
 
+#Log that serve if cron is running
 service cron status
 
 # Keeps process running, otherwise docker finilizes
